@@ -11,7 +11,9 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -37,7 +39,7 @@ public class Stockwatche implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
+	/*	final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
 		nameField.setText("GWT User");
 		final Label errorLabel = new Label();
@@ -81,21 +83,25 @@ public class Stockwatche implements EntryPoint {
 				sendButton.setEnabled(true);
 				sendButton.setFocus(true);
 			}
-		});
+		});*/
 
-		// Create a handler for the sendButton and nameField
+		
+		
+		
+		
+	/*	// Create a handler for the sendButton and nameField
 		class MyHandler implements ClickHandler, KeyUpHandler {
 			/**
 			 * Fired when the user clicks on the sendButton.
 			 */
-			public void onClick(ClickEvent event) {
+		/*	public void onClick(ClickEvent event) {
 				sendNameToServer();
 			}
 
 			/**
 			 * Fired when the user types in the nameField.
 			 */
-			public void onKeyUp(KeyUpEvent event) {
+		/*	public void onKeyUp(KeyUpEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 					sendNameToServer();
 				}
@@ -104,7 +110,7 @@ public class Stockwatche implements EntryPoint {
 			/**
 			 * Send the name from the nameField to the server and wait for a response.
 			 */
-			private void sendNameToServer() {
+		/*	private void sendNameToServer() {
 				// First, we validate the input.
 				errorLabel.setText("");
 				String textToServer = nameField.getText();
@@ -138,9 +144,31 @@ public class Stockwatche implements EntryPoint {
 			}
 		}
 
-		// Add a handler to send the name to the server
+	/*	// Add a handler to send the name to the server
 		MyHandler handler = new MyHandler();
 		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+		nameField.addKeyUpHandler(handler); */
+		
+		TextBox inhalt = new TextBox();
+		FlexTable flex = new FlexTable();
+		Button add = new Button("Add");
+		HorizontalPanel hp = new HorizontalPanel();
+		VerticalPanel vp = new VerticalPanel();
+		
+		flex.setText(0, 0, "Symbol");
+		flex.setText(0, 1, "Price");
+		flex.setText(0, 2, "Change");
+		flex.setText(0, 3, "Remove");
+		
+		hp.add(flex);
+		vp.add(inhalt);
+		vp.add(add);
+		
+
+		RootPanel.get().add(hp);
+		RootPanel.get().add(vp);
+		RootPanel.get("stylesheet").add(vp);
 	}
+	
+	
 }
