@@ -1,23 +1,23 @@
 package com.google.gwt.sample.stockwatcher.client;
 
-import com.google.gwt.sample.stockwatcher.shared.FieldVerifier;
+
+import java.util.ArrayList;
+
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -35,140 +35,85 @@ public class Stockwatche implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
+	private StockPriceServiceAsync stockPriceSvc=null;
+	
 	/**
 	 * This is the entry point method.
 	 */
+	private static final int REFRESH_INTERVAL=5000;
+	
+	TextBox inhalt = new TextBox();
+	FlexTable flex = new FlexTable();
+	Button add = new Button("Add");
+	HorizontalPanel hp = new HorizontalPanel();
+	VerticalPanel vp = new VerticalPanel();
+	public ArrayList<String> aktien = new ArrayList<String>();
+	int row = flex.getRowCount();
+	public String symbol;
+	Button remove= new Button("X");
+	private Label test = new Label ("Was geht");
+
+	
 	public void onModuleLoad() {
-	/*	final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
-		final Label errorLabel = new Label();
 
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
+	test.setStyleName("test");
 
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
-
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
-
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
-
-		// Add a handler to close the DialogBox
-		closeButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
+		Timer refreshTimer = new Timer() {
+			public void run() {
+				
+				refreshWatchList();
 			}
-		});*/
-
+			private void refreshWatchList() {	
 		
 		
-		
-		
-	/*	// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
-		/*	public void onClick(ClickEvent event) {
-				sendNameToServer();
 			}
-
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-		/*	public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					sendNameToServer();
-				}
-			}
-
-			/**
-			 * Send the name from the nameField to the server and wait for a response.
-			 */
-		/*	private void sendNameToServer() {
-				// First, we validate the input.
-				errorLabel.setText("");
-				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
-					errorLabel.setText("Please enter at least four characters");
-					return;
-				}
-
-				// Then, we send the input to the server.
-				sendButton.setEnabled(false);
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						// Show the RPC error message to the user
-						dialogBox.setText("Remote Procedure Call - Failure");
-						serverResponseLabel.addStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(SERVER_ERROR);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-
-					public void onSuccess(String result) {
-						dialogBox.setText("Remote Procedure Call");
-						serverResponseLabel.removeStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(result);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-				});
-			}
-		}
-
-	/*	// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler); */
+			
+			
+		};
 		
-		TextBox inhalt = new TextBox();
-		FlexTable flex = new FlexTable();
-		Button add = new Button("Add");
-		HorizontalPanel hp = new HorizontalPanel();
-		VerticalPanel vp = new VerticalPanel();
-		
+		refreshTimer.scheduleRepeating(5000);
+			
 		flex.setText(0, 0, "Symbol");
 		flex.setText(0, 1, "Price");
 		flex.setText(0, 2, "Change");
-		flex.setText(0, 3, "Remove");
-		
+		flex.setText(0, 3, "Remove");	
 		hp.add(flex);
 		vp.add(inhalt);
 		vp.add(add);
-		
+		vp.add(test);
 
-		RootPanel.get().add(hp);
+		RootPanel.get("stylesheet").add(hp);
 		RootPanel.get().add(vp);
-		RootPanel.get("stylesheet").add(vp);
+		RootPanel.get("Name").add(test);
+	
+		add.addClickHandler(new ClickHandler() {
+			
+		public void onClick(ClickEvent event) {
+				  addStock();	  
+			}
+		private void addStock() {
+			
+			final String symbol = inhalt.getText().toUpperCase().trim();
+			final Button remove= new Button("X");
+			int row = flex.getRowCount();
+		    inhalt.setFocus(true);
+			if(aktien.contains(symbol)) return;
+		    aktien.add(symbol);
+		    flex.setText(row, 0, symbol);
+			flex.setWidget(row, 3, remove);	 
+			
+			remove.addClickHandler(new ClickHandler() {
+				public void onClick(ClickEvent event) {
+					addButton();
+				}
+				private void addButton() {
+				flex.removeRow(1);		
+				}
+			});	 
+	 }	
+	});
 	}
-	
-	
 }
+	
+
+

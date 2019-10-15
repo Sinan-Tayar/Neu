@@ -6,10 +6,13 @@ h1 {
   font-size: 2em;
   font-weight: bold;
   color: #777777;
-  margin: 40px 0px 70px;
+  margin: 90px 0px 70px;
   text-align: center;
 }
 
+.p{
+	color:yellow;
+}
 .sendButton {
   display: block;
   font-size: 16pt;
@@ -28,7 +31,39 @@ h1 {
   color: red;
 }
 
+.Name{
+	color: red;
+	font-family: 'Libre Barcode 128 Text', cursive;
+	font-weight: normal;
+	font-size: 550%;	
+	margin-left: 20px;
+	margin-top: 10px;
+	margin-bottom: 5px;  
+}
+
+div#header {
+	list-style: none;
+	margin: 0;
+	background: steelblue;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: row wrap;
+	justify-content: flex-end;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
 /** Set ids using widget.getElement().setId("idOfElement") */
 #closeButton {
   margin: 15px 6px 6px;
+}
+
+/* Darstellung der Images. */
+.placeholder {
+	height: 1000vh;
+	width: 800vw;
+	margin-top: 40vh;
+	margin-left: 100vw;
 }
