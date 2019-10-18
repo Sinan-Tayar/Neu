@@ -67,3 +67,32 @@ div#header {
 	margin-top: 40vh;
 	margin-left: 100vw;
 }
+
+.profilTitle {
+	font-size: 3rem;
+	margin-bottom: 1.5rem;
+	color: #363636;
+	font-weight: 600;
+	line-height: 1.125;
+	display: block;
+	-webkit-margin-before: 0.67em;
+	margin-block-start: 0.67em;
+	-webkit-margin-after: 0.67em;
+	margin-block-end: 0.67em;
+	-webkit-margin-start: 0px;
+	margin-inline-start: 0px;
+	-webkit-margin-end: 0px;
+	margin-inline-end: 0px;
+	text-align: center;
+}
+#details {
+	background: white;
+	-ms-grid-column: 2;
+	grid-column-start: 2;
+	-ms-grid-column-span: 3;
+	grid-column-end: 5;
+	-ms-grid-row: 2;
+	grid-row-start: 2;
+	-ms-grid-row-span: 1;
+	grid-row-end: 3;
+}

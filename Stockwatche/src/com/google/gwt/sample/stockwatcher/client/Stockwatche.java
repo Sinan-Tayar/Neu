@@ -8,7 +8,11 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.sample.stockwatcher.shared.bo.User;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -16,6 +20,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.sample.stockwatcher.client.gui.RegistrationForm;
+import com.google.gwt.sample.stockwatcher.shared.bo.BusinessObject;
+
+
 
 
 
@@ -51,12 +59,42 @@ public class Stockwatche implements EntryPoint {
 	int row = flex.getRowCount();
 	public String symbol;
 	Button remove= new Button("X");
-	private Label test = new Label ("Was geht");
+	private Label test = new Label ("Melden Sie sich an um Käufe zu tätigen");
+	private Anchor signInLink = new Anchor();
 
 	
 	public void onModuleLoad() {
 
-	test.setStyleName("test");
+		
+		test.addStyleName("Name");
+		vp.add(test);
+		RootPanel.get().add(vp);
+		
+		 class loginServiceCallback implements AsyncCallback<User> {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("fehlgeschlagen");
+				
+			}
+
+			@Override
+			public void onSuccess(User u) {
+		//	CurrentUser.setUser(u);
+			
+			if (u.isLoggedIn()) {
+				if (u.getUsername() == null) {
+					Anchor shoppingListEditorLink = new Anchor();
+					shoppingListEditorLink.setHref(GWT.getHostPageBaseURL() + "SharedShoppingList.html");
+					RootPanel.get("details").add(new RegistrationForm(shoppingListEditorLink, u));
+			}
+		}
+		
+	test.addStyleName("profilTitle");
+	
+
+
+	
 
 		Timer refreshTimer = new Timer() {
 			public void run() {
@@ -71,9 +109,9 @@ public class Stockwatche implements EntryPoint {
 			
 		};
 		
-		refreshTimer.scheduleRepeating(5000);
+		//refreshTimer.scheduleRepeating(5000);
 			
-		flex.setText(0, 0, "Symbol");
+	/*	flex.setText(0, 0, "Symbol");
 		flex.setText(0, 1, "Price");
 		flex.setText(0, 2, "Change");
 		flex.setText(0, 3, "Remove");	
@@ -82,8 +120,9 @@ public class Stockwatche implements EntryPoint {
 		vp.add(add);
 		vp.add(test);
 
-		RootPanel.get("stylesheet").add(hp);
-		RootPanel.get().add(vp);
+
+		RootPanel.get("stylesheet").add(vp);
+		RootPanel.get("details").add(test);
 		RootPanel.get("Name").add(test);
 	
 		add.addClickHandler(new ClickHandler() {
@@ -111,9 +150,25 @@ public class Stockwatche implements EntryPoint {
 				}
 			});	 
 	 }	
-	});
+	});*/
+		
+		
+		}
+		
+	/*	public static class CurrentUser {
+
+			private static User u = null;
+
+			public static User getUser() {
+				return u;
+			}
+
+			public static void setUser(User u) {
+				CurrentUser.u = u;
+			}
+	}*/
+		}
 	}
 }
-	
 
 
