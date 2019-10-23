@@ -15,12 +15,20 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+
+import com.google.gwt.sample.stockwatcher.client.gui.Header;
+import com.google.gwt.sample.stockwatcher.client.gui.LandingPage;
+import com.google.gwt.sample.stockwatcher.client.gui.Navigator;
+import com.google.gwt.sample.stockwatcher.client.gui.Notification;
 import com.google.gwt.sample.stockwatcher.client.gui.RegistrationForm;
+import com.google.gwt.sample.stockwatcher.shared.LoginServiceAsync;
 import com.google.gwt.sample.stockwatcher.shared.bo.BusinessObject;
 
 
@@ -44,131 +52,123 @@ public class Stockwatche implements EntryPoint {
 	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
 	private StockPriceServiceAsync stockPriceSvc=null;
+		
+	// Objekt, das die Anmeldeinformation des Benutzerdienstes enthält //privat
+
+	private LoginServiceAsync loginService = null;
 	
 	/**
 	 * This is the entry point method.
 	 */
-	private static final int REFRESH_INTERVAL=5000;
 	
-	TextBox inhalt = new TextBox();
-	FlexTable flex = new FlexTable();
-	Button add = new Button("Add");
-	HorizontalPanel hp = new HorizontalPanel();
-	VerticalPanel vp = new VerticalPanel();
-	public ArrayList<String> aktien = new ArrayList<String>();
-	int row = flex.getRowCount();
-	public String symbol;
-	Button remove= new Button("X");
-	private Label test = new Label ("Melden Sie sich an um Käufe zu tätigen");
-	private Anchor signInLink = new Anchor();
+	Header header = new Header();
+	RootPanel rootPanelHeader = RootPanel.get("header");
+
+	Navigator navigator = new Navigator();
+	RootPanel rootPanelNavigator = RootPanel.get("navigator");
+
+	private VerticalPanel loginPanel = new VerticalPanel();
+	private Label loginLabel = new Label ("Melden Sie sich an um Käufe zu tätigen");
+	private Button loginButton = new Button ("Einloggen");
+	private Anchor signInLink = new Anchor("Einlogen");
 
 	
 	public void onModuleLoad() {
 
+		loginLabel.addStyleName("profilTitle");	
+
+		rootPanelHeader.add(header);
+		rootPanelNavigator.add(navigator);
 		
-		test.addStyleName("Name");
-		vp.add(test);
-		RootPanel.get().add(vp);
-		
-		 class loginServiceCallback implements AsyncCallback<User> {
+		loginService = ClientsideSettings.getLoginService();
+		loginService.login(GWT.getHostPageBaseURL() + "SharedShoppingList.html", new loginServiceCallback());
+	}	
+		private class loginServiceCallback implements AsyncCallback<User> {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("fehlgeschlagen");
-				
+				Notification.show(caught.toString());
+				Window.alert("Test: " + caught.toString());			
 			}
 
 			@Override
 			public void onSuccess(User u) {
-		//	CurrentUser.setUser(u);
+			CurrentUser.setUser(u);
 			
 			if (u.isLoggedIn()) {
 				if (u.getUsername() == null) {
-					Anchor shoppingListEditorLink = new Anchor();
-					shoppingListEditorLink.setHref(GWT.getHostPageBaseURL() + "SharedShoppingList.html");
-					RootPanel.get("details").add(new RegistrationForm(shoppingListEditorLink, u));
-			}
-		}
-		
-	test.addStyleName("profilTitle");
-	
-
-
-	
-
-		Timer refreshTimer = new Timer() {
-			public void run() {
+					Anchor stockwatcheEditorLink = new Anchor();
+					stockwatcheEditorLink.setHref(GWT.getHostPageBaseURL() + "Stockwatche.html");
+					RootPanel.get("details").add(new RegistrationForm(stockwatcheEditorLink, u));
+			}else {
 				
-				refreshWatchList();
-			}
-			private void refreshWatchList() {	
-		
-		
-			}
-			
-			
-		};
-		
-		//refreshTimer.scheduleRepeating(5000);
-			
-	/*	flex.setText(0, 0, "Symbol");
-		flex.setText(0, 1, "Price");
-		flex.setText(0, 2, "Change");
-		flex.setText(0, 3, "Remove");	
-		hp.add(flex);
-		vp.add(inhalt);
-		vp.add(add);
-		vp.add(test);
+				Header header = new Header();
+				RootPanel rootPanelHeader = RootPanel.get("header");
 
+				Navigator navigator = new Navigator();
+				RootPanel rootPanelNavigator = RootPanel.get("navigator");
+				
+				LandingPage landingPage = new LandingPage();
+				RootPanel rootPanelLandingPage = RootPanel.get("details");
 
-		RootPanel.get("stylesheet").add(vp);
-		RootPanel.get("details").add(test);
-		RootPanel.get("Name").add(test);
-	
-		add.addClickHandler(new ClickHandler() {
-			
-		public void onClick(ClickEvent event) {
-				  addStock();	  
+				rootPanelHeader.add(header);
+				rootPanelNavigator.add(navigator);
+				rootPanelLandingPage.add(landingPage);
 			}
-		private void addStock() {
-			
-			final String symbol = inhalt.getText().toUpperCase().trim();
-			final Button remove= new Button("X");
-			int row = flex.getRowCount();
-		    inhalt.setFocus(true);
-			if(aktien.contains(symbol)) return;
-		    aktien.add(symbol);
-		    flex.setText(row, 0, symbol);
-			flex.setWidget(row, 3, remove);	 
-			
-			remove.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					addButton();
-				}
-				private void addButton() {
-				flex.removeRow(1);		
-				}
-			});	 
-	 }	
-	});*/
-		
-		
+			}else {
+				loadLogin();
+			}	
 		}
+		}	 
+		 /**
+			 * Diese Methode wird aufgerufen, falls der User nicht am System eingeloggt ist
+			 * In dieser wird die Google LoginMaske über den Button
+			 * <code>loginButton </code> aufgerufen
+			 */
+		 private void loadLogin() {
+			 loginPanel.setSpacing(10);
+				loginPanel.setWidth("100vw");
+				loginPanel.add(loginLabel);
+				loginPanel.add(loginButton);
+				loginPanel.setCellHorizontalAlignment(loginLabel, HasHorizontalAlignment.ALIGN_CENTER);
+				loginPanel.setCellHorizontalAlignment(loginButton, HasHorizontalAlignment.ALIGN_CENTER);
+				signInLink.setHref(CurrentUser.getUser().getLoginUrl());
+
+				RootPanel.get("header").setVisible(false);
+				RootPanel.get("navigation").setVisible(false);
+				RootPanel.get("footer").setVisible(false);
+				RootPanel.get("details").add(loginPanel);
+
+				loginLabel.setStylePrimaryName("loginLabel");
+				loginButton.setStylePrimaryName("speicherProfilButton");
+
+				/**
+				 * Durch einen Klick auf den <code>loginButton</code> wird der User auf die
+				 * Google LoginMaske weitergeleitet
+				 */
+				loginButton.addClickHandler(new LoginClickHandler());	 
+		 }		 
+		private class LoginClickHandler implements ClickHandler {
+
+				@Override
+				public void onClick(ClickEvent event) {
+
+					Window.open(signInLink.getHref(), "_self", "");
+				}
+			}		
 		
-	/*	public static class CurrentUser {
+		public static class CurrentUser {
 
 			private static User u = null;
 
 			public static User getUser() {
 				return u;
 			}
-
 			public static void setUser(User u) {
 				CurrentUser.u = u;
 			}
-	}*/
-		}
 	}
-}
+}		
+		
 
 
