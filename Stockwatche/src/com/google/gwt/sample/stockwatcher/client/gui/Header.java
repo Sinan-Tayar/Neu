@@ -75,7 +75,7 @@ public class Header extends FlowPanel {
 		headerImage.addStyleName("header_image");
 
 		// Einfügen des Icons
-		logout.setUrl("/image/milano.png");
+		logout.setUrl("/image/Logout.png");
 		logout.addStyleName("img");
 
 		headerLeft.add(headerLeftElement);

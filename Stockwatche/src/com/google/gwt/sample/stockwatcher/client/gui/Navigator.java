@@ -4,7 +4,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.sample.stockwatcher.client.ClientsideSettings;
 import com.google.gwt.sample.stockwatcher.client.StockPriceServiceAsync;
-import com.google.gwt.sample.stockwatcher.client.Stockwatche.CurrentUser;
+import com.google.gwt.sample.stockwatcher.client.StockwatcherEntry.CurrentUser;
 import com.google.gwt.sample.stockwatcher.shared.bo.User;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.Timer;
@@ -17,11 +17,12 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 
 
+
 public class Navigator extends FlowPanel {
-	
+
 
 	private User user = CurrentUser.getUser();
-	private StockPriceServiceAsync stockPriceSvc = ClientsideSettings.getStockprice();
+	private StockPriceServiceAsync stockprice = ClientsideSettings.getStockprice();
 
 	private FlowPanel navPanel = new FlowPanel();
 	private FlowPanel navImage = new FlowPanel();
@@ -41,13 +42,13 @@ public class Navigator extends FlowPanel {
 	private GroupCreationForm gcf; // Klasse die hinter dem NEU-Button steckt
 	//private FavoriteArticleForm faf; // Klasse die hinter dem Stern steckt
 	
-	private AdministrationGroupForm agf;
-//	private ShoppingListForm sf;
+	/*private AdministrationGroupForm agf;
+	private ShoppingListForm sf;
 
 	private Group selectedGroup = null;
 	private ShoppingList selectedList = null;
 	
-	private GroupShoppingListTreeViewModel gsltvm;
+	private GroupShoppingListTreeViewModel gsltvm;*/
 	
 	private CellTree tree;
 	
@@ -66,7 +67,7 @@ public class Navigator extends FlowPanel {
 
 			@Override
 			public void run() {
-				Navigator.this.refreshInfo();
+			//	Navigator.this.refreshInfo();
 				schedule(10000);
 				
 			}
@@ -75,12 +76,12 @@ public class Navigator extends FlowPanel {
 		// solange soll abgewartet werden, bis der Timer abläuft
 		timer.schedule(10000);
 		
-		agf = new AdministrationGroupForm();
+	/*	agf = new AdministrationGroupForm();
 		sf = new ShoppingListForm();
 		
 		gsltvm = new GroupShoppingListTreeViewModel();
 		
-		tree = new CellTree(gsltvm, "Root");
+		tree = new CellTree(gsltvm, "Root");*/
 		
 		//Link zur Benutzerdokumentation:
 		
@@ -99,11 +100,11 @@ public class Navigator extends FlowPanel {
 		
 		
 		// Zusammenführen der Forms für den Tree
-		gsltvm.setGroupForm(agf);
+	/*	gsltvm.setGroupForm(agf);
 		agf.setGsltvm(gsltvm);
 		
 		gsltvm.setShoppingListForm(sf);
-		sf.setGsltvm(gsltvm);
+		sf.setGsltvm(gsltvm);*/
 		
 		tree.setAnimationEnabled(true);
 
@@ -136,12 +137,12 @@ public class Navigator extends FlowPanel {
 		this.add(tree);
 
 		// Hinzufügen der ClickHandler
-		neuButton.addClickHandler(new ShowGroupCreationForm());
+	//	neuButton.addClickHandler(new ShowGroupCreationForm());
 		//star.addClickHandler(new ShowFavoriteArticleForm());
 
 	}
 	
-	public void setGsltvm(GroupShoppingListTreeViewModel gsltvm) {
+/*	public void setGsltvm(GroupShoppingListTreeViewModel gsltvm) {
 		this.gsltvm = gsltvm;
 	}
 	
@@ -165,12 +166,12 @@ public class Navigator extends FlowPanel {
 	
 	public ShoppingList getSelectedList() {
 		return selectedList;
-	}
-	protected void refreshInfo() {
+	}*/
+/*	protected void refreshInfo() {
 		
-		stockPriceSvc.changed(this.getGsltvm().getSelectedGroup(), user, new RefreshGroupCallback());
+		stockprice.changed(this.getGsltvm().getSelectedGroup(), user, new RefreshGroupCallback());
 		
-	}
+	}*/
 
 	private class RefreshGroupCallback implements AsyncCallback<Boolean>{
 
@@ -196,7 +197,7 @@ public class Navigator extends FlowPanel {
 	 * Die Klasse ShowGroupCreationForm ermöglicht die Weiterletung zur
 	 * GroupCreationForm
 	 */
-	private class ShowGroupCreationForm implements ClickHandler {
+	/*private class ShowGroupCreationForm implements ClickHandler {
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -207,8 +208,7 @@ public class Navigator extends FlowPanel {
 
 		}
 
-	}
+	}*/
 
-	
 
 }
