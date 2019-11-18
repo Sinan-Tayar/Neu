@@ -10,6 +10,8 @@ import java.util.Vector;
 import com.google.gwt.sample.stockwatcher.shared.bo.User;
 
 
+
+
 /**
 * Dieser Mapper ist für alle Datenbankvorgänge - also der Informationsabfrage aus der DB, sowie der Datenablage in der DB - des BOs User verantwortlich.
 * Er ermöglicht die Durchführung aller "CRUD-Vorgänge". Dazu bietet er verschiedene Methoden.
@@ -92,7 +94,6 @@ public class UserMapper {
                 user.setUsername(rs.getString("username"));
                 user.setGmail(rs.getString("email"));
 				
-				
 				users.addElement(user);
 			}
 
@@ -106,7 +107,7 @@ public class UserMapper {
 	public User findById(int id) {
 		Connection con = DBConnection.connection();
 		User user = new User();
-		String sql="SELECT * FROM user WHERE id=" + id;
+		String sql="SELECT * FROM user WHERE iduser=" + id;
 			
 		try {
 
@@ -115,12 +116,10 @@ public class UserMapper {
 
 				if (rs.next()) {
 					
-				user.setId(rs.getInt("id"));
+				user.setId(rs.getInt("iduser"));
 				user.setName(rs.getString("name"));
                 user.setUsername(rs.getString("username"));
-                user.setGmail(rs.getString("gmail"));
-				user.setCreateDate(rs.getTimestamp("createDate"));
-				user.setModDate(rs.getTimestamp("modDate"));
+                user.setGmail(rs.getString("email"));
 					
 				}
 
@@ -137,7 +136,7 @@ public class UserMapper {
 	public User findByGmail(String gmail) {
 		
 		Connection con = DBConnection.connection();
-		String sql="SELECT * FROM user WHERE gmail='" + gmail+"'";
+		String sql="SELECT * FROM user WHERE email='" + gmail+"'";
 			
 		try {
 
@@ -148,13 +147,11 @@ public class UserMapper {
 				if (rs.next()) {
 				User user = new User();
 
-				user.setId(rs.getInt("id"));
+				user.setId(rs.getInt("iduser"));
 				user.setName(rs.getString("name"));
                 user.setUsername(rs.getString("username"));
-                user.setGmail(rs.getString("gmail"));
-				user.setCreateDate(rs.getTimestamp("createDate"));
-				user.setModDate(rs.getTimestamp("modDate"));
-				
+                user.setGmail(rs.getString("email"));
+			
 				return user;
 				}
 
@@ -173,22 +170,20 @@ public class UserMapper {
 		
 		// DISTINCT sorg hier dafür, dass nur ein Nutzer-Objekt zurückgegeben wird
 		
-		String sql="SELECT DISTINCT * FROM user WHERE name=" + name;
+		
 			
 		try {
-
+			
+				String sql="SELECT * FROM user WHERE name= '" + name+"'";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
-
 				if (rs.next()) {
 					
-				user.setId(rs.getInt("id"));
+				user.setId(rs.getInt("iduser"));
 				user.setName(rs.getString("name"));
                 user.setUsername(rs.getString("username"));
-                user.setGmail(rs.getString("gmail"));
-				user.setCreateDate(rs.getTimestamp("createDate"));
-				user.setModDate(rs.getTimestamp("modDate"));
-					
+                user.setGmail(rs.getString("email"));
+	
 				}
 
 			} catch (SQLException e) {
@@ -196,5 +191,22 @@ public class UserMapper {
 				return null;
 			}
 			return user;
+		}
+	
+	public void delete (User user) {
+		Connection con = DBConnection.connection();
+			
+			String sql= "DELETE FROM user WHERE iduser = " + user.getId();
+			
+		    try {
+		    	
+		    	Statement stmt = con.createStatement();
+		    	stmt.executeUpdate(sql);	 
+		      
+		    }
+		    catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+			
 		}
 }

@@ -1,7 +1,9 @@
 package com.google.gwt.sample.stockwatcher.server;
 
+import com.google.gwt.sample.stockwatcher.server.db.UserMapper;
 import com.google.gwt.sample.stockwatcher.shared.LoginService;
 import com.google.gwt.sample.stockwatcher.shared.bo.User;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -9,6 +11,8 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class LoginServiceImpl extends RemoteServiceServlet implements LoginService{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Override
 	public User login(String requestUri) {
 		UserService userService= UserServiceFactory.getUserService();
@@ -20,8 +24,18 @@ public class LoginServiceImpl extends RemoteServiceServlet implements LoginServi
          * ob dieser unserem Kekbuy System bekannt ist.
          * 
          */
-		if (googleUser != null) {
-
+		if (googleUser != null) { // Google User
+				
+		/*		user.setLoggedIn(true);
+				user.setGmailAddress(googleUser.getEmail());
+				user.setName(googleUser.getNickname());
+				user.setLogoutUrl(userService.createLogoutURL(continuationURL));
+			} else {
+				user.setLoggedIn(false);
+				user.setLoginUrl(userService.createLoginURL(continuationURL));
+			}
+			return user;*/
+			
 			 User existU = UserMapper.userMapper().findByGmail(googleUser.getEmail());
 			
 			/*

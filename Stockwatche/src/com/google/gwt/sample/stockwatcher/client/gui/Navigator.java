@@ -42,8 +42,8 @@ public class Navigator extends FlowPanel {
 	private GroupCreationForm gcf; // Klasse die hinter dem NEU-Button steckt
 	//private FavoriteArticleForm faf; // Klasse die hinter dem Stern steckt
 	
-	/*private AdministrationGroupForm agf;
-	private ShoppingListForm sf;
+//	private AdministrationGroupForm agf;
+//	private ShoppingListForm sf;
 
 	private Group selectedGroup = null;
 	private ShoppingList selectedList = null;

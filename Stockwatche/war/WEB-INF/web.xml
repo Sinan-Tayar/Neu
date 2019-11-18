@@ -15,21 +15,19 @@
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/stockwatche/greet</url-pattern>
   </servlet-mapping>
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>Stockwatche.html</welcome-file>
-  </welcome-file-list>
 
   <servlet>
     <servlet-name>loginService</servlet-name>
     <servlet-class>com.google.gwt.sample.stockwatcher.server.LoginServiceImpl</servlet-class>
   </servlet>
   
- 
- 
   <servlet-mapping>
     <servlet-name>loginService</servlet-name>
-    <url-pattern>/stockwatcher/login</url-pattern>
+    <url-pattern>/stockwatche/login</url-pattern>
   </servlet-mapping>
+  
+    <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Stockwatche.html</welcome-file>
+  </welcome-file-list>
 </web-app>

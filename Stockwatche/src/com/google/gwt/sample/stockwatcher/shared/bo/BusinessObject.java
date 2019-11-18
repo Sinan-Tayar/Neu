@@ -1,5 +1,7 @@
 package com.google.gwt.sample.stockwatcher.shared.bo;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 
@@ -10,7 +12,7 @@ private static final long serialVersionUID = 1L;
 	
 	private int id;
 	private String name;
-	private Timestamp createDate;
+	private String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 	private Timestamp modDate;
 	
 	public int getId() {
@@ -25,13 +27,6 @@ private static final long serialVersionUID = 1L;
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-	
 	
 	
 	 public Timestamp getModDate() {
@@ -58,6 +53,12 @@ private static final long serialVersionUID = 1L;
 			
 			return false;
 	    }
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 	
 	
 	

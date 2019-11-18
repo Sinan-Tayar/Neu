@@ -24,7 +24,7 @@ public class Header extends FlowPanel {
 
 	// Erstellung Label Divs
 	private Label headerTitle = new Label("CineMates");
-	private Label headerSubtitle = new Label("share it - see it");
+
 
 	// Anchors
 	private Anchor report = new Anchor("Report");
@@ -65,7 +65,6 @@ public class Header extends FlowPanel {
 		headerEnd.addStyleName("header_end");
 		headerLeftElement.addStyleName("header_left_element");
 		headerTitle.addStyleName("header_title");
-		headerSubtitle.addStyleName("header_subtitle");
 		headerRightElement.addStyleName("header_right_elememt");
 
 		report.addStyleName("header_right_elememt");
@@ -80,7 +79,7 @@ public class Header extends FlowPanel {
 
 		headerLeft.add(headerLeftElement);
 		headerLeftElement.add(headerTitle);
-		headerLeftElement.add(headerSubtitle);
+
 
 		headerRight.add(headerEnd);
 		headerEnd.add(report);

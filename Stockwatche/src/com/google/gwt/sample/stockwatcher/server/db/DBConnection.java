@@ -41,7 +41,7 @@ public class DBConnection {
 		 String url=null;
 		 try {
 			 //Local MySQL instance to use during development
-			 Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			 Class.forName("com.mysql.cj.jdbc.Driver");
 			 url=localUrl;
 			 
 		 con= DriverManager.getConnection(url);
