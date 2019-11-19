@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import com.google.gwt.sample.stockwatcher.shared.bo.Group;
 
-import sharedShoppingList.server.db.DBConnection;
+
 
 public class GroupMapper {
 

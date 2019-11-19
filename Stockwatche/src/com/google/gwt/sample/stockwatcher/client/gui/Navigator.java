@@ -45,7 +45,7 @@ public class Navigator extends FlowPanel {
 //	private AdministrationGroupForm agf;
 //	private ShoppingListForm sf;
 
-	private Group selectedGroup = null;
+/*	private Group selectedGroup = null;
 	private ShoppingList selectedList = null;
 	
 	private GroupShoppingListTreeViewModel gsltvm;*/
