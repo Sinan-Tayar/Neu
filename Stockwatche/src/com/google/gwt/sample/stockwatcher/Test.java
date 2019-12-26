@@ -1,16 +1,5 @@
 package com.google.gwt.sample.stockwatcher;
 
-public class Test {
-
-	import java.sql.Connection;
-	import java.sql.DriverManager;
-	import java.sql.ResultSet;
-	import java.sql.Statement;
-
-	import com.google.gwt.sample.stockwatcher.server.db.GroupMapper;
-	import com.google.gwt.sample.stockwatcher.server.db.UserMapper;
-	import com.google.gwt.sample.stockwatcher.shared.bo.Group;
-	import com.google.gwt.sample.stockwatcher.shared.bo.User;
 
 	public class Mapper {
 		
@@ -40,4 +29,4 @@ public class Test {
 	}
 	}
 
-}
+
